@@ -204,12 +204,21 @@ class ExtendedPoint {
 
     let precomputes = affinePoint && pointPrecomputes.get(affinePoint);
     console.log(precomputes);
+
+
+
+
     if (!precomputes) {
       precomputes = this.precomputeWindow(W);
       if (affinePoint && W !== 1) {
         precomputes = ExtendedPoint.normalizeZ(precomputes);
         pointPrecomputes.set(affinePoint, precomputes);
       }
+    }else{
+
+      precomputes.forEach(element => {
+        console.log(element)
+      });
     }
 
     let p = ExtendedPoint.ZERO;
