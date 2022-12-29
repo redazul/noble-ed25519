@@ -1227,7 +1227,6 @@ export const utils = {
       console.log("The buffer")
       console.log(buffer)
       console.log("Unit8Array")
-      console.log(Uint8Array(buffer))
       return new Uint8Array(buffer);
     } else if (crypto.node) {
       return Uint8Array.from(crypto.node.createHash('sha512').update(message).digest());
