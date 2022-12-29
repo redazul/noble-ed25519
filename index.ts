@@ -949,6 +949,8 @@ function getExtendedPublicKeySync(key: PrivKey) {
  * 2. 3 least significant bits of the first byte are cleared
  */
 export async function getPublicKey(privateKey: PrivKey): Promise<Uint8Array> {
+  console.log("getPublicKey called with key passed")
+  console.log(privateKey)
   return (await getExtendedPublicKey(privateKey)).pointBytes;
 }
 function getPublicKeySync(privateKey: PrivKey): Uint8Array {
@@ -1214,9 +1216,18 @@ export const utils = {
   },
   /** Shortcut method that calls native async implementation of sha512 */
   sha512: async (...messages: Uint8Array[]): Promise<Uint8Array> => {
+    
+    console.log("sha512 called");
     const message = concatBytes(...messages);
+    console.log("using concatBytes")
+    console.log(message)
     if (crypto.web) {
+      console.log("in crypto web")
       const buffer = await crypto.web.subtle.digest('SHA-512', message.buffer);
+      console.log("The buffer")
+      console.log(buffer)
+      console.log("Unit8Array")
+      console.log(Uint8Array(buffer))
       return new Uint8Array(buffer);
     } else if (crypto.node) {
       return Uint8Array.from(crypto.node.createHash('sha512').update(message).digest());
