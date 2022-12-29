@@ -951,6 +951,10 @@ function getExtendedPublicKeySync(key: PrivKey) {
 export async function getPublicKey(privateKey: PrivKey): Promise<Uint8Array> {
   console.log("getPublicKey called with key passed")
   console.log(privateKey)
+  console.log("get extended public key")
+  console.log(await getExtendedPublicKey(privateKey))
+  console.log("point bytes")
+  console.log((await getExtendedPublicKey(privateKey)).pointBytes)
   return (await getExtendedPublicKey(privateKey)).pointBytes;
 }
 function getPublicKeySync(privateKey: PrivKey): Uint8Array {
