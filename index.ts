@@ -705,7 +705,10 @@ function edIsNegative(num: bigint) {
 function bytesToNumberLE(uint8a: Uint8Array): bigint {
   console.log("litte endian part")
   console.log(uint8a)
+  console.log(Uint8Array.from(uint8a).reverse())
+  console.log(bytesToHex(Uint8Array.from(uint8a).reverse()))
   console.log(BigInt('0x' + bytesToHex(Uint8Array.from(uint8a).reverse())))
+  console.log(BigInt('0xFF'))
   if (!(uint8a instanceof Uint8Array)) throw new Error('Expected Uint8Array');
   return BigInt('0x' + bytesToHex(Uint8Array.from(uint8a).reverse()));
 }
