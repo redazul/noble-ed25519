@@ -722,6 +722,11 @@ function bytes255ToNumberLE(bytes: Uint8Array): bigint {
 
 function mod(a: bigint, b: bigint = CURVE.P) {
   const res = a % b;
+  console.log("in modulo");
+  console.log(a)
+  console.log(b)
+  console.log(res)
+  console.log(res >= _0n)
   return res >= _0n ? res : b + res;
 }
 
