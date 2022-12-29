@@ -602,6 +602,10 @@ class Point {
    * @returns new point
    */
   multiply(scalar: number | bigint): Point {
+    console.log("multiply called");
+    console.log(ExtendedPoint.fromAffine(this));
+    console.log(ExtendedPoint.fromAffine(this).multiply(scalar, this))
+    console.log(ExtendedPoint.fromAffine(this).multiply(scalar, this).toAffine())
     return ExtendedPoint.fromAffine(this).multiply(scalar, this).toAffine();
   }
 }
