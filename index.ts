@@ -251,6 +251,11 @@ class ExtendedPoint {
   // Uses wNAF method. Windowed method may be 10% faster,
   // but takes 2x longer to generate and consumes 2x memory.
   multiply(scalar: number | bigint, affinePoint?: Point): ExtendedPoint {
+    console.log("in second multiply ");
+    console.log(scalar);
+    console.log(affinePoint)
+    console.log(normalizeScalar(scalar, CURVE.l))
+    console.log(this.wNAF(normalizeScalar(scalar, CURVE.l), affinePoint))
     return this.wNAF(normalizeScalar(scalar, CURVE.l), affinePoint);
   }
 
