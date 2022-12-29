@@ -192,13 +192,18 @@ class ExtendedPoint {
   }
 
   private wNAF(n: bigint, affinePoint?: Point): ExtendedPoint {
+    console.log("inside wNAF")
+    console.log(n);
+    console.log(affinePoint);
     if (!affinePoint && this.equals(ExtendedPoint.BASE)) affinePoint = Point.BASE;
     const W = (affinePoint && affinePoint._WINDOW_SIZE) || 1;
+    console.log(W)
     if (256 % W) {
       throw new Error('Point#wNAF: Invalid precomputation window, must be power of 2');
     }
 
     let precomputes = affinePoint && pointPrecomputes.get(affinePoint);
+    console.log(precomputes);
     if (!precomputes) {
       precomputes = this.precomputeWindow(W);
       if (affinePoint && W !== 1) {
@@ -208,13 +213,16 @@ class ExtendedPoint {
     }
 
     let p = ExtendedPoint.ZERO;
+    console.log(p)
     let f = ExtendedPoint.BASE;
-
+    console.log(f)
     const windows = 1 + 256 / W;
     const windowSize = 2 ** (W - 1);
     const mask = BigInt(2 ** W - 1); // Create mask with W ones: 0b1111 for W=4 etc.
     const maxNumber = 2 ** W;
     const shiftBy = BigInt(W);
+
+    console.log({windows,windowSize,mask,maxNumber,shiftBy})
 
     for (let window = 0; window < windows; window++) {
       const offset = window * windowSize;
@@ -243,6 +251,11 @@ class ExtendedPoint {
       } else {
         p = p.add(constTimeNegate(cond2, precomputes[offset2]));
       }
+
+      console.log({window,offset,wbits})
+      console.log({p,f})
+
+
     }
     return ExtendedPoint.normalizeZ([p, f])[0];
   }
