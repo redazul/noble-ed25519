@@ -937,6 +937,10 @@ function sha512s(...m: Uint8Array[]) {
 
 /** Convenience method that creates public key and other stuff. RFC8032 5.1.5 */
 async function getExtendedPublicKey(key: PrivKey) {
+  console.log("in get extended public key");
+  console.log(checkPrivateKey(key))
+  console.log(await utils.sha512(checkPrivateKey(key)))
+  console.log(getKeyFromHash(await utils.sha512(checkPrivateKey(key))))
   return getKeyFromHash(await utils.sha512(checkPrivateKey(key)));
 }
 function getExtendedPublicKeySync(key: PrivKey) {
