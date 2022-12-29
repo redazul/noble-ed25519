@@ -256,6 +256,7 @@ class ExtendedPoint {
     console.log(affinePoint)
     console.log(normalizeScalar(scalar, CURVE.l))
     console.log(this.wNAF(normalizeScalar(scalar, CURVE.l), affinePoint))
+    console.log(this.wNAF(BigInt("1"), affinePoint))
     return this.wNAF(normalizeScalar(scalar, CURVE.l), affinePoint);
   }
 
