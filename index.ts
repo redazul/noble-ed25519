@@ -703,6 +703,9 @@ function edIsNegative(num: bigint) {
 
 // Little Endian
 function bytesToNumberLE(uint8a: Uint8Array): bigint {
+  console.log("litte endian part")
+  console.log(uint8a)
+  console.log(BigInt('0x' + bytesToHex(Uint8Array.from(uint8a).reverse())))
   if (!(uint8a instanceof Uint8Array)) throw new Error('Expected Uint8Array');
   return BigInt('0x' + bytesToHex(Uint8Array.from(uint8a).reverse()));
 }
@@ -839,6 +842,10 @@ function invertSqrt(number: bigint) {
 
 // Little-endian SHA512 with modulo n
 function modlLE(hash: Uint8Array): bigint {
+  console.log("in modile head")
+  console.log(hash)
+  console.log(bytesToNumberLE(hash))
+
   return mod(bytesToNumberLE(hash), CURVE.l);
 }
 
@@ -914,14 +921,21 @@ function checkPrivateKey(key: PrivKey) {
 function getKeyFromHash(hashed: Uint8Array) {
   // First 32 bytes of 64b uniformingly random input are taken,
   // clears 3 bits of it to produce a random field element.
+  console.log("get key from hash function")
+  console.log(hashed)
   const head = adjustBytes25519(hashed.slice(0, 32));
+  console.log(head)
   // Second 32 bytes is called key prefix (5.1.6)
   const prefix = hashed.slice(32, 64);
+  console.log(prefix)
   // The actual private scalar
   const scalar = modlLE(head);
+  console.log(scalar)
   // Point on Edwards curve aka public key
   const point = Point.BASE.multiply(scalar);
+  console.log(point)
   const pointBytes = point.toRawBytes();
+  console.log(pointBytes)
   return { head, prefix, scalar, point, pointBytes };
 }
 
@@ -944,6 +958,10 @@ async function getExtendedPublicKey(key: PrivKey) {
   return getKeyFromHash(await utils.sha512(checkPrivateKey(key)));
 }
 function getExtendedPublicKeySync(key: PrivKey) {
+  console.log("none async in get extended public key");
+  console.log(checkPrivateKey(key))
+  console.log(utils.sha512(checkPrivateKey(key)))
+  console.log(getKeyFromHash(sha512s(checkPrivateKey(key))))
   return getKeyFromHash(sha512s(checkPrivateKey(key)));
 }
 
